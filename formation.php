@@ -25,7 +25,7 @@ if(strcmp($login, "admin")!=0 || strcmp($mdp, "admin")!=0){
 </head>
 <body>
     <div>
-        Login : <?=$login ?> ; Mdp : <?=$mdp ?>
+        Login : <?=$login ?>
         <form method="post" action="connexion.php">
             <input type="submit" value="Déconnexion"/>
         </form>

@@ -1,6 +1,6 @@
 <?php
 session_start();
-include("SQL/mysql.php");
+include("../SQL/mysql.php");
 if(strcmp(isset($_SESSION["connecte"]) ? $_SESSION["connecte"] : "", "true")!=0){
     header("Location: connexion.php");
     exit();

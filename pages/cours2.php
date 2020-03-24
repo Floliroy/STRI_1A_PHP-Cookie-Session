@@ -1,13 +1,28 @@
 <?php
 session_start();
-$login  = isset($_SESSION["login"])  ? $_SESSION["login"] : "";
-$mdp    = isset($_SESSION["mdp"])    ? $_SESSION["mdp"]   : "";
-if(strcmp($login, "admin")!=0 || strcmp($mdp, "admin")!=0){
+include("../SQL/mysql.php");
+if(strcmp(isset($_SESSION["connecte"]) ? $_SESSION["connecte"] : "", "true")!=0){
     header("Location: connexion.php");
-}else{
-    $nbCours2 = isset($_COOKIE["nbCours2"]) ? $_COOKIE["nbCours2"]+1 : 1;
-    setcookie("nbCours2", strval($nbCours2));
+    exit();
 }
+/*$nbCours2 = isset($_COOKIE["nbCours2"]) ? $_COOKIE["nbCours2"]+1 : 1;
+setcookie("nbCours2", strval($nbCours2));*/
+$login = $_SESSION["login"];
+$ip;
+if (!empty($_SERVER['HTTP_CLIENT_IP'])) {
+    $ip = $_SERVER['HTTP_CLIENT_IP'];
+} elseif (!empty($_SERVER['HTTP_X_FORWARDED_FOR'])) {
+    $ip = $_SERVER['HTTP_X_FORWARDED_FOR'];
+} else {
+    $ip = $_SERVER['REMOTE_ADDR'];
+}
+
+$con = getCon();
+$res = select("SELECT * FROM Utilisateur WHERE login = '$login'", $con);   
+$row = mysqli_fetch_array($res);
+update("Utilisateur", "nbCours2", strval($row["nbCours2"]+1), "login = '$login'", $con);
+update("Utilisateur", "ip", "'$ip'", "login = '$login'", $con);
+finish($con);
 ?>
 <!DOCTYPE html>
 <head>
@@ -17,7 +32,7 @@ if(strcmp($login, "admin")!=0 || strcmp($mdp, "admin")!=0){
 <body>
     <div>
         Login : <?=$login ?>
-        <form method="post" action="connexion.php">
+        <form method="post" action="../connexion.php">
             <input type="submit" value="Déconnexion"/>
         </form>
     </div>

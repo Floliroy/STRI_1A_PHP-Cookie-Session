@@ -23,7 +23,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 }
 
 if(strcmp(isset($_SESSION["connecte"]) ? $_SESSION["connecte"] : "", "true")!=0){
-    header("Location: connexion.php");
+    header("Location: ../connexion.php");
     exit();
 }
 

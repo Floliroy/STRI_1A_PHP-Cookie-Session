@@ -2,7 +2,7 @@
 session_start();
 include("../SQL/mysql.php");
 if(strcmp(isset($_SESSION["connecte"]) ? $_SESSION["connecte"] : "", "true")!=0){
-    header("Location: connexion.php");
+    header("Location: ../connexion.php");
     exit();
 }
 /*$nbCours2 = isset($_COOKIE["nbCours2"]) ? $_COOKIE["nbCours2"]+1 : 1;
